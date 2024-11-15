@@ -14,18 +14,18 @@ struct Item {
 struct Item inventory[MAX_ITEMS];
 int itemCount = 0;
 
-// Function to add a new item to the inventory
+// Function for adding items to inventory
 
 void addItem(int id, char name[], int quantity, float price) {
     if (itemCount < MAX_ITEMS) {
-        // Assign values to the new item
+        
         inventory[itemCount].id = id;
         strcpy(inventory[itemCount].name, name);
         inventory[itemCount].quantity = quantity;
         inventory[itemCount].price = price;
-        inventory[itemCount].soldCount = 0;  // Initialize sold count to 0
+        inventory[itemCount].soldCount = 0; 
 
-        // Confirm addition and update item count
+        // Status for item addition 
         printf("Item '%s' added successfully!\n", name);
         itemCount++;
     } else {
@@ -34,16 +34,15 @@ void addItem(int id, char name[], int quantity, float price) {
 }
 
 void sellItem(int id, int quantitySold) {
-    // Find the item in the inventory based on the given ID
+    // finding required item in the inventory
     for (int i = 0; i < itemCount; i++) {
         if (inventory[i].id == id) {
-            // Check if enough quantity is available
+            // Checking for the quantity if is enough to meet the customer's needs
             if (inventory[i].quantity >= quantitySold) {
-                // Update the item's quantity and sold count
+                // Updating the item's quantity and sold count
                 inventory[i].quantity -= quantitySold;
                 inventory[i].soldCount += quantitySold;
 
-                // Confirm the sale and display updated info
                 printf("Sale successful! %d units of '%s' sold.\n", quantitySold, inventory[i].name);
                 printf("Updated Quantity: %d, Total Sold: %d\n",
                        inventory[i].quantity, inventory[i].soldCount);
@@ -51,15 +50,15 @@ void sellItem(int id, int quantitySold) {
                 printf("Insufficient stock for item '%s'. Available quantity: %d.\n",
                        inventory[i].name, inventory[i].quantity);
             }
-            return;  // Exit the function once item is found and processed
+            return; 
         }
     }
-    // If item with given ID is not found, display an error message
+    
     printf("Item with ID %d not found in inventory.\n", id);
 }
 
 int main() {
-    // Example of adding items to the inventory
+    
     addItem(1, "Milk", 20, 2.5);
     addItem(2, "Bread", 15, 1.2);
    
