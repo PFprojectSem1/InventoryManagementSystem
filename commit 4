@@ -1,0 +1,140 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void displayMenu() {
+    cout << "\nCoulomb's Law Calculator\n";
+    cout << "1. Calculate Force\n";
+    cout << "2. Calculate Product of Charges (q1 * q2)\n";
+    cout << "3. Calculate Distance Between Charges\n";
+    cout << "4. Exit\n";
+    cout << "Enter your choice: ";
+}
+
+void displayUnitOptions() {
+    cout << "\nSelect units for the charges:\n";
+    cout << "1. Coulombs (C)\n";
+    cout << "2. Microcoulombs (µC)\n";
+    cout << "Enter your choice: ";
+}
+
+void displayDistanceOptions() {
+    cout << "\nSelect units for the distance:\n";
+    cout << "1. Meters (m)\n";
+    cout << "2. Centimeters (cm)\n";
+    cout << "Enter your choice: ";
+}
+
+double convertChargeToCoulombs(double charge, int unitChoice) {
+    if (unitChoice == 2) {
+        return charge * 1e-6; // Convert microcoulombs to coulombs
+    }
+    return charge;
+}
+
+double convertDistanceToMeters(double distance, int unitChoice) {
+    if (unitChoice == 2) {
+        return distance / 100.0; // Convert centimeters to meters
+    }
+    return distance;
+}
+
+void calculateForce() {
+    double q1, q2, r, force;
+    int chargeUnit, distanceUnit;
+
+    cout << "\nEnter the magnitude of the first charge (q1): ";
+    cin >> q1;
+    displayUnitOptions();
+    cin >> chargeUnit;
+    q1 = convertChargeToCoulombs(q1, chargeUnit);
+
+    cout << "Enter the magnitude of the second charge (q2): ";
+    cin >> q2;
+    displayUnitOptions();
+    cin >> chargeUnit;
+    q2 = convertChargeToCoulombs(q2, chargeUnit);
+
+    cout << "Enter the distance between the charges: ";
+    cin >> r;
+    displayDistanceOptions();
+    cin >> distanceUnit;
+    r = convertDistanceToMeters(r, distanceUnit);
+
+    const double k = 9e9; // Coulomb's constant
+    force = k * (q1 * q2) / (r * r);
+
+    cout << "\nThe electrostatic force between the charges is: " << force << " N\n";
+}
+
+void calculateProductOfCharges() {
+    double force, r, product;
+    int distanceUnit;
+
+    cout << "\nEnter the force between the charges (F) in newtons: ";
+    cin >> force;
+
+    cout << "Enter the distance between the charges: ";
+    cin >> r;
+    displayDistanceOptions();
+    cin >> distanceUnit;
+    r = convertDistanceToMeters(r, distanceUnit);
+
+    const double k = 9e9; // Coulomb's constant
+    product = (force * r * r) / k;
+
+    cout << "\nThe product of the charges (q1 * q2) is: " << product << " C^2\n";
+}
+
+void calculateDistance() {
+    double q1, q2, force, distance;
+    int chargeUnit;
+
+    cout << "\nEnter the magnitude of the first charge (q1): ";
+    cin >> q1;
+    displayUnitOptions();
+    cin >> chargeUnit;
+    q1 = convertChargeToCoulombs(q1, chargeUnit);
+
+    cout << "Enter the magnitude of the second charge (q2): ";
+    cin >> q2;
+    displayUnitOptions();
+    cin >> chargeUnit;
+    q2 = convertChargeToCoulombs(q2, chargeUnit);
+
+    cout << "Enter the force between the charges (F) in newtons: ";
+    cin >> force;
+
+    const double k = 9e9; // Coulomb's constant
+    distance = sqrt((k * q1 * q2) / force);
+
+    cout << "\nThe distance between the charges is: " << distance << " meters\n";
+}
+
+int main() {
+    int choice;
+
+    do {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                calculateForce();
+                break;
+            case 2:
+                calculateProductOfCharges();
+                break;
+            case 3:
+                calculateDistance();
+                break;
+            case 4:
+                cout << "Exiting the program. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
